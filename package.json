@@ -1,6 +1,6 @@
 {
   "name": "@ryan-cha/stats.js",
-  "version": "0.18.1",
+  "version": "0.18.2",
   "description": "JavaScript Performance Monitor",
   "main": "build/stats.js",
   "module": "build/stats.module.js",

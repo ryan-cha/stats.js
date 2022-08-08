@@ -90,7 +90,7 @@ Stats.Panel = function (name, fg, bg, avgLineColor) {
   var min = Infinity,
     max = 0,
     round = Math.round;
-  var PR = round(window.devicePixelRatio || 1);
+  const PR = round(window.devicePixelRatio || 1);
 
   const bucket = [];
 
@@ -104,8 +104,8 @@ Stats.Panel = function (name, fg, bg, avgLineColor) {
     GRAPH_X = offset * PR,
     GRAPH_Y = offset * 5 * PR,
     GRAPH_WIDTH = (W - 2 * offset) * PR,
-    GRAPH_HEIGHT = (HEIGHT - GRAPH_Y - offset) * PR;
-  const BUCKET_COUNT = GRAPH_WIDTH;
+    GRAPH_HEIGHT = (H - offset * 6) * PR;
+  const BUCKET_COUNT = W - 2 * offset;
   const showAverage =
     avgLineColor !== undefined && typeof avgLineColor === 'string';
 
@@ -149,8 +149,8 @@ Stats.Panel = function (name, fg, bg, avgLineColor) {
       const text = `A:${average.toFixed()}ms`;
       context.fillText(
         text,
-        GRAPH_X + GRAPH_WIDTH - text.length * 6.1,
-        GRAPH_Y + GRAPH_HEIGHT - 10
+        GRAPH_X + GRAPH_WIDTH - text.length * 6.1 * PR,
+        GRAPH_Y + (GRAPH_HEIGHT - 10 * PR)
       );
       context.restore();
     },
