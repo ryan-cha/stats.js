@@ -151,13 +151,20 @@
 	      context.strokeStyle = avgLineColor;
 	      context.stroke();
 
-	      context.fillStyle = '#ff0000';
 	      const text = `A:${average.toFixed()}ms`;
-	      context.fillText(
-	        text,
-	        GRAPH_X + GRAPH_WIDTH - text.length * 6.1 * PR,
-	        GRAPH_Y + (GRAPH_HEIGHT - 10 * PR)
+	      const textX = GRAPH_X + GRAPH_WIDTH - text.length * 6.1 * PR;
+	      const textY = GRAPH_Y + (GRAPH_HEIGHT - 10 * PR);
+
+	      context.fillStyle = 'rgba(255,255,255, 0.75)';
+	      context.fillRect(
+	        textX - 3 * PR,
+	        textY - 3 * PR,
+	        WIDTH - (textX - 3 * PR) - offset * PR,
+	        HEIGHT - textY
 	      );
+
+	      context.fillStyle = '#ff0000';
+	      context.fillText(text, textX, textY);
 	      context.restore();
 	    },
 
