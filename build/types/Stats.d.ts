@@ -20,6 +20,7 @@ declare class Stats {
     begin(): void;
     end(): number;
     update(): void;
+    get dom(): HTMLDivElement;
 }
 declare class Panel {
     private canvas;

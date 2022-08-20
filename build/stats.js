@@ -67,6 +67,9 @@
 	    update() {
 	        this.beginTime = this.end();
 	    }
+	    get dom() {
+	        return this.containerDiv;
+	    }
 	}
 	class Panel {
 	    constructor(showTotalAverage, name, fg, bg, avgLineColor) {

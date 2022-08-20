@@ -100,6 +100,10 @@ class Stats {
   update() {
     this.beginTime = this.end();
   }
+
+  get dom() {
+    return this.containerDiv;
+  }
 }
 
 class Panel {
