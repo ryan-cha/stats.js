@@ -1,9 +1,10 @@
 {
   "name": "@ryan-cha/stats.js",
-  "version": "0.18.4",
+  "version": "0.19.0",
   "description": "JavaScript Performance Monitor",
-  "main": "build/stats.js",
+  "main": "build/stats.module.js",
   "module": "build/stats.module.js",
+  "types": "build/types/index.d.ts",
   "repository": {
     "type": "git",
     "url": "https://github.com/ryan-cha/stats.js"
@@ -33,8 +34,26 @@
   },
   "homepage": "https://github.com/ryan-cha/stats.js",
   "devDependencies": {
-    "rollup": "^2.3.2",
-    "google-closure-compiler": "20200224.0.0"
+    "google-closure-compiler": "20200224.0.0",
+    "@rollup/plugin-commonjs": "^17.1.0",
+    "@rollup/plugin-node-resolve": "^11.2.0",
+    "@rollup/plugin-replace": "^2.4.2",
+    "@rollup/plugin-typescript": "^8.2.0",
+    "@types/w3c-image-capture": "^1.0.2",
+    "@typescript-eslint/eslint-plugin": "^3.9.1",
+    "@typescript-eslint/parser": "^3.9.1",
+    "eslint": "^6.6.0",
+    "prettier": "^2.0.5",
+    "rollup": "^2.18.2",
+    "rollup-plugin-node-polyfills": "^0.2.1",
+    "rollup-plugin-peer-deps-external": "^2.2.4",
+    "rollup-plugin-sourcemaps": "^0.6.3",
+    "rollup-plugin-terser": "^7.0.2",
+    "rollup-plugin-typescript2": "^0.29.0",
+    "stats.js": "^0.17.0",
+    "tslib": "^2.0.1",
+    "ttypescript": "^1.5.12",
+    "typescript": "4.3.5"
   },
   "publishConfig": {
     "registry": "https://npm.pkg.github.com"
