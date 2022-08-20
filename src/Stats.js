@@ -3,7 +3,11 @@
  * @contributor Ryan Cha
  */
 
-var Stats = function () {
+/**
+ * @param showTotalAverage Whether to show the average of all time (besides the recent average)
+ * @returns
+ */
+var Stats = function (showTotalAverage) {
   var mode = 0;
 
   var container = document.createElement('div');
@@ -37,8 +41,12 @@ var Stats = function () {
     prevTime = beginTime,
     frames = 0;
 
-  var fpsPanel = addPanel(new Stats.Panel('FPS', '#0ff', '#002'));
-  var msPanel = addPanel(new Stats.Panel('ms', '#0f0', '#020', '#ff0000'));
+  var fpsPanel = addPanel(
+    new Stats.Panel(showTotalAverage ?? false, 'FPS', '#0ff', '#002')
+  );
+  var msPanel = addPanel(
+    new Stats.Panel(showTotalAverage ?? false, 'ms', '#0f0', '#020', '#ff0000')
+  );
   var memPanel = undefined;
   // if (self.performance && self.performance.memory) {
   //   var memPanel = addPanel(new Stats.Panel('MB', '#f08', '#201'));
@@ -95,12 +103,17 @@ var Stats = function () {
   };
 };
 
-Stats.Panel = function (name, fg, bg, avgLineColor) {
+Stats.Panel = function (showTotalAverage, name, fg, bg, avgLineColor) {
   var min = Infinity,
     max = 0,
     round = Math.round;
   const PR = round(window.devicePixelRatio || 1);
 
+  /**
+   * Contains the accumulated sum and the number of items
+   * [sum, count]
+   */
+  const allHistory = [0, 0];
   const bucket = [];
 
   const W = 100;
@@ -141,7 +154,7 @@ Stats.Panel = function (name, fg, bg, avgLineColor) {
   return {
     dom: canvas,
 
-    updateAverage: function (average) {
+    updateAverage: function (average, allAverage) {
       if (!showAverage || average === 0) {
         return;
       }
@@ -154,7 +167,9 @@ Stats.Panel = function (name, fg, bg, avgLineColor) {
       context.strokeStyle = avgLineColor;
       context.stroke();
 
-      const text = `A:${average.toFixed()}ms`;
+      const text = `A:${
+        allAverage ? `${allAverage.toFixed()} | ` : ''
+      }${average.toFixed()}ms`;
       const textX = GRAPH_X + GRAPH_WIDTH - text.length * 6.1 * PR;
       const textY = GRAPH_Y + (GRAPH_HEIGHT - 10 * PR);
 
@@ -168,6 +183,7 @@ Stats.Panel = function (name, fg, bg, avgLineColor) {
 
       context.fillStyle = '#ff0000';
       context.fillText(text, textX, textY);
+
       context.restore();
     },
 
@@ -179,6 +195,8 @@ Stats.Panel = function (name, fg, bg, avgLineColor) {
         bucket.shift();
       }
       bucket.push(value);
+      allHistory[0] += value;
+      allHistory[1] += 1;
 
       context.fillStyle = bg;
       context.globalAlpha = 1;
@@ -217,7 +235,10 @@ Stats.Panel = function (name, fg, bg, avgLineColor) {
 
       // average line
       const average = sum / bucket.length;
-      this.updateAverage(average);
+      this.updateAverage(
+        average,
+        showTotalAverage ? allHistory[0] / allHistory[1] : undefined
+      );
     },
   };
 };
